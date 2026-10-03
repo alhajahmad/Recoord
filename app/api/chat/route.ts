@@ -1,10 +1,10 @@
 import {env} from "cloudflare:workers";
-import {identity,db,failure,body,text,ownedProject,HttpError} from "../shared";
+import {identity,db,failure,body,text,accessProject,HttpError} from "../shared";
 import {boundedHistory,readDeltas,type ModelMessage} from "@/lib/model";
 export async function POST(r:Request){try{
  const owner=await identity(r),e=env as unknown as Record<string,string>,d=await body(r);
  if(!e.AI_BASE_URL||!e.AI_MODEL||!e.AI_API_KEY)throw new HttpError(503,"AI replies aren’t connected yet. You can still create projects and edit documents.");
- const content=text(d.content,20000,true).trim(),id=text(d.id,100,true),requestId=text(d.requestId,100,true),project=d.project?await ownedProject(text(d.project,100,true),owner):null;
+ const content=text(d.content,20000,true).trim(),id=text(d.id,100,true),requestId=text(d.requestId,100,true),project=d.project?await accessProject(text(d.project,100,true),owner):null;
  const existing=await db().prepare("SELECT * FROM conversations WHERE id=?").bind(id).first();if(existing&&existing.owner!==owner)throw new HttpError(404,"Conversation not found.");if(existing&&(existing.project??null)!==(d.project??null))throw new HttpError(400,"Conversation belongs to another project.");
  const priorRequest=await db().prepare("SELECT id FROM messages WHERE id=?").bind(requestId).first();if(priorRequest)throw new HttpError(409,"This message was already submitted. Reopen the conversation to see its saved reply.");
  const daily=Math.max(1,Math.min(Number(e.AI_DAILY_REQUEST_LIMIT)||50,1000)),global=Math.max(1,Math.min(Number(e.AI_DAILY_SITE_REQUEST_LIMIT)||200,10000)),day=new Date().toISOString().slice(0,10);

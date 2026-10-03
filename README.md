@@ -4,7 +4,7 @@ Turn ideas into work you can return to. Recoord is an MIT-licensed AI workspace 
 
 ## What works
 
-- Private account-owned projects with a goal and reusable text context.
+- Shared projects with owner, editor, and viewer roles; private personal AI conversations.
 - Three starting points: plan a project, draft a document, compare options.
 - Streaming chat with an OpenAI-compatible HTTPS model provider.
 - Save replies as independent editable documents, with conflict detection and Markdown export.
@@ -12,7 +12,7 @@ Turn ideas into work you can return to. Recoord is an MIT-licensed AI workspace 
 - Responsive interface, a clearly labeled sample, and optional WebMCP prompt staging.
 - Server-side credentials, ownership checks, same-origin write checks, user/site daily limits, bounded history and output.
 
-No model provider is connected by default. Documents and projects work without one; AI answers need provider configuration. The source archive is available from the app. Source repository: https://github.com/alhajahmad/Recoord.
+No model provider is connected by default. Documents and projects work without one; AI answers need provider configuration. The source archive is available from the app. Public repository: https://github.com/alhajahmad/Recoord.
 
 ## Local development
 
@@ -57,3 +57,16 @@ npm run build
 Generate schema changes with `npm run db:generate`; do not edit already-applied migrations. Tests cover streaming parsing and signed self-host identity validation. Local API checks also verified saved work, edit conflicts, draft persistence, exports, deletion cascades, and isolation between accounts. Live model generation and deployment to an independent Cloudflare account still require end-to-end verification.
 
 See [contributing](CONTRIBUTING.md), [security](SECURITY.md), and the [pilot guide](docs/pilot.md). Dependencies retain their own licenses.
+
+
+## Team coordination
+
+Open a project and select **Team board**. Owners invite people by exact sign-in email, choose editor/viewer access, and copy the invitation link. No email is sent. Invitations appear in the invited account's sidebar, require explicit acceptance, and expire after seven days. Owners can revoke invitations and remove or change members. The creator remains the owner.
+
+Members share project goals, context, documents, tasks, comments, decisions, and updates. Personal AI conversations and drafts remain private. Editors can assign tasks, set dates and statuses, edit documents, and post comments or decisions. Viewers can read and export shared work. Comments can be attached to a document and mention current members; mentions appear inside the project discussion, without email or push notifications.
+
+The board refreshes every 20 seconds. Document and task versions prevent silent overwrites; this is not simultaneous text editing. AI summaries use bounded shared project data, never private conversations. Review the summary before sharing it, and approve individual suggestions before they become unassigned tasks.
+
+Deleting a project removes its work for every member. Deleting an account's Recoord data deletes owned projects, private conversations and drafts, and memberships. Contributions to projects owned by others remain with a former-member attribution. This action does not delete the external sign-in account or provider records.
+
+Collaboration tests exercise real SQLite migrations and API handlers with simulated identities, including invited-email matching, viewer/editor/owner permissions, task and document conflicts, revoked access, exports, and cascade deletion. Provider responses in those tests are mocked; live AI is checked separately on the deployment.
