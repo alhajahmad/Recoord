@@ -1,0 +1,5 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {generateKeyPair,SignJWT,createLocalJWKSet,exportJWK} from 'jose';import {verifyAccess} from '../self-host/auth.mjs';
+const {publicKey,privateKey}=await generateKeyPair('RS256');const key=await exportJWK(publicKey);key.kid='test';const jwks=createLocalJWKSet({keys:[key]});const issuer='https://test.cloudflareaccess.com';
+async function token(aud='app',exp='1h'){return new SignJWT({email:'tester@example.test'}).setProtectedHeader({alg:'RS256',kid:'test'}).setSubject('user-one').setIssuedAt().setIssuer(issuer).setAudience(aud).setExpirationTime(exp).sign(privateKey)}
+test('verified identity uses signed claims',async()=>assert.deepEqual(await verifyAccess(await token(),issuer,'app',jwks),{id:'user-one',email:'tester@example.test'}));
+test('wrong audience, expired token and forged token are rejected',async()=>{await assert.rejects(verifyAccess(await token('other'),issuer,'app',jwks));await assert.rejects(verifyAccess(await token('app','-1h'),issuer,'app',jwks));await assert.rejects(verifyAccess('not-a-token',issuer,'app',jwks))});

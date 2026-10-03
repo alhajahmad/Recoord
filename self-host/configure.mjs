@@ -1,0 +1,5 @@
+import {writeFileSync} from 'node:fs';
+const [databaseId,hostname,issuer,audience]=process.argv.slice(2);
+if(!/^[a-f0-9-]{36}$/i.test(databaseId||'')||!hostname||!issuer||!audience)throw new Error('Usage: node self-host/configure.mjs DATABASE_ID HOSTNAME https://TEAM.cloudflareaccess.com ACCESS_AUDIENCE');
+writeFileSync('self-host/wrangler.json',JSON.stringify({name:'recoord',main:'worker.mjs',compatibility_date:'2026-05-15',compatibility_flags:['nodejs_compat'],workers_dev:false,preview_urls:false,routes:[{pattern:hostname,custom_domain:true}],assets:{directory:'../dist/client',binding:'ASSETS',run_worker_first:true},d1_databases:[{binding:'DB',database_name:'recoord',database_id:databaseId,migrations_dir:'../drizzle'}],vars:{ACCESS_ISSUER:issuer,ACCESS_AUDIENCE:audience,AI_PROVIDER_LABEL:'',AI_BASE_URL:'',AI_MODEL:'',AI_DAILY_REQUEST_LIMIT:'50',AI_DAILY_SITE_REQUEST_LIMIT:'200',AI_MAX_OUTPUT_TOKENS:'2048'}},null,2));
+console.log('Created self-host/wrangler.json. Set your provider configuration there and configure Cloudflare Access before deployment.');

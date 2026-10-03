@@ -1,0 +1,2 @@
+import { identity,db,failure } from "../shared";
+export async function GET(r:Request){try{const owner=await identity(r),id=new URL(r.url).searchParams.get("id");const rows=await db().prepare("SELECT m.id,m.role,m.content FROM messages m JOIN conversations c ON c.id=m.conversation WHERE c.id=? AND c.owner=? ORDER BY m.created,m.rowid").bind(id,owner).all();return Response.json(rows.results,{headers:{"Cache-Control":"no-store"}})}catch(e){return failure(e)}}
