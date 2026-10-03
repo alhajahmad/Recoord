@@ -70,3 +70,8 @@ The board refreshes every 20 seconds. Document and task versions prevent silent 
 Deleting a project removes its work for every member. Deleting an account's Recoord data deletes owned projects, private conversations and drafts, and memberships. Contributions to projects owned by others remain with a former-member attribution. This action does not delete the external sign-in account or provider records.
 
 Collaboration tests exercise real SQLite migrations and API handlers with simulated identities, including invited-email matching, viewer/editor/owner permissions, task and document conflicts, revoked access, exports, and cascade deletion. Provider responses in those tests are mocked; live AI is checked separately on the deployment.
+
+
+## Finding your way around
+
+Your workspace opens with project cards. Selecting a project opens its overview, with assigned work, overdue tasks, progress, and the next task due. Use Project board, Private chat, and Documents to switch views; project/view URLs survive reloads and can be bookmarked. Task search and filters help narrow the board, status can be changed from a card, and New task or Edit details opens a focused dialog. AI responses render standard Markdown lists, links, code, and tables. The interface adapts to mobile screens and reduced-motion preferences.
