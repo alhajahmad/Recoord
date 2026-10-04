@@ -21,11 +21,23 @@ test('shared projects enforce invitations, roles, private chats, conflicts, revo
  globalThis.__testEnv={DB};
  const dir=await mkdtemp(join(tmpdir(),'recoord-tests-'));let routes={};
  try{
- for(const name of ['workspace','team','export','data','messages','summary']){
+ for(const name of ['workspace','team','export','data','messages','summary','profile']){
   const output=join(dir,name+'.mjs');await build({entryPoints:[resolve('app/api/'+name+'/route.ts')],outfile:output,bundle:true,format:'esm',platform:'node',plugins:[{name:'test-boundaries',setup(b){b.onResolve({filter:/^cloudflare:workers$/},()=>({path:'env',namespace:'test'}));b.onResolve({filter:/chatgpt-auth$/},()=>({path:'auth',namespace:'test'}));b.onLoad({filter:/.*/,namespace:'test'},a=>({contents:a.path==='env'?'export const env=globalThis.__testEnv':'export async function getChatGPTUser(){return globalThis.__testUser}',loader:'js'}))}}]});routes[name]=await import(pathToFileURL(output))}
  const users={owner:{userId:'owner',email:'owner@example.com',displayName:'Owner'},editor:{userId:'editor',email:'editor@example.com',displayName:'Editor'},viewer:{userId:'viewer',email:'viewer@example.com',displayName:'Viewer'},stranger:{userId:'stranger',email:'stranger@example.com',displayName:'Stranger'}};
  async function req(who,route,method='GET',data,query=''){globalThis.__testUser=users[who]||null;const response=await routes[route][method](new Request('https://recoord.test/api/'+route+query,{method,headers:{origin:'https://recoord.test','Content-Type':'application/json'},body:data?JSON.stringify(data):undefined}));return {status:response.status,data:await response.json()}}
  assert.equal((await req(null,'workspace')).status,401);
+ assert.equal((await req(null,'profile')).status,401);
+ const details={name:'New name',bio:'Builder',title:'Founder',company:'Recoord',location:'',website:'https://example.com',photo:''};
+ assert.equal((await req('owner','profile','PATCH',details)).status,200);
+ await req('owner','workspace');
+ assert.equal((await req('owner','profile')).data.name,'New name');
+ assert.equal((await req('editor','profile')).data.bio,null);
+ assert.equal((await req('editor','profile','PATCH',{...details,id:'owner',name:'Editor name'})).status,200);
+ assert.equal((await req('owner','profile')).data.name,'New name');
+ assert.equal((await req('owner','profile','PATCH',{...details,photo:'data:image/svg+xml,<svg/>'})).status,400);
+ assert.equal((await req('owner','profile','PATCH',{...details,website:'javascript:alert(1)'})).status,400);
+ assert.equal((await req('owner','export')).data.profile.bio,'Builder');
+
  assert.equal((await req('owner','workspace','POST',{kind:'project',id:'p',title:'Shared launch',goal:'Launch',context:''})).status,200);
  const inv=await req('owner','team','POST',{action:'invite',project:'p',email:'editor@example.com',role:'editor'});assert.equal(inv.status,200);
  assert.equal((await req('stranger','team','POST',{action:'accept',id:inv.data.id})).status,404);
