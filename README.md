@@ -77,3 +77,11 @@ Collaboration tests exercise real SQLite migrations and API handlers with simula
 ## Finding your way around
 
 Your workspace opens with project cards. Selecting a project opens its overview, with assigned work, overdue tasks, progress, and the next task due. Use Project board, Private chat, and Documents to switch views; project/view URLs survive reloads and can be bookmarked. Task search and filters help narrow the board, status can be changed from a card, and New task or Edit details opens a focused dialog. AI responses render standard Markdown lists, links, code, and tables. The interface adapts to mobile screens and reduced-motion preferences.
+
+### Project read API
+
+Owners can create a read-only project key from **Administration → API keys**. Keys expire after 30 days, are shown once, and can be revoked immediately. Recoord stores a SHA-256 hash, not the credential. Treat a key as access to that project's shared data.
+
+Send `Authorization: Bearer <your-key>` to `GET /api/v1/project` on your Recoord host. The endpoint returns the scoped project's title, goal, up to 100 recent tasks, and 20 recent shared documents. The response includes `truncated` flags and limits; it is not a complete backup. It excludes private AI conversations, messages, member email addresses, and project context. Each key allows 60 reads per minute. Browser sign-in endpoints do not accept these keys.
+
+Administration shows personal usage, accessible project membership, project activity, and current configuration. It is not an organization-wide admin role. Billing, unrestricted admin keys, private tunnels, outbound webhook delivery, comprehensive audit logging, configurable API-body logging, and automatic retention policies are not implemented. Project activity and key last-use timestamps are narrower records, not a compliance audit trail.

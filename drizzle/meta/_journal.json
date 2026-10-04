@@ -43,6 +43,13 @@
       "when": 1791143873081,
       "tag": "0005_past_colonel_america",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1791147490439,
+      "tag": "0006_nostalgic_jack_power",
+      "breakpoints": true
     }
   ]
 }
