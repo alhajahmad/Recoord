@@ -26,3 +26,6 @@ h1{font-family:inherit;font-weight:650;letter-spacing:-1.9px;line-height:1.13;co
 @media(max-width:540px){header{padding:0 14px;height:66px;min-height:66px}.project-navigation{padding:0 14px}.workspace-home h1{font-size:33px;letter-spacing:-1.2px}.project-cards{gap:14px;margin-top:25px}.project-cards>button{min-height:190px;padding:21px}.team-board{padding:24px 15px 40px}.team-heading h2{font-size:27px}.project-metrics>button,.project-metrics>div{padding:16px 12px}.next-action{padding:16px}.editor>textarea{padding:16px}.welcome h1{font-size:37px;letter-spacing:-1.4px}}
 /* Keep the composer below introductory content on shorter screens. */
 .chat-column:has(.welcome) .compose-area{position:static}.chat-column:has(.welcome) .welcome{margin:0;padding-bottom:24px}
+
+/* Brand mark: connected strokes, paired with a compact lowercase wordmark. */
+.brand{gap:11px;letter-spacing:normal}.brand-symbol{display:block;width:36px;height:36px;flex-shrink:0}.brand-wordmark{font-size:27px;font-weight:750;letter-spacing:-1.4px;line-height:1;color:var(--ink)}
