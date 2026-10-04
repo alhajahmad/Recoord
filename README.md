@@ -109,3 +109,6 @@ Usage and Service health show 7/30/90-day personal request observations with sou
 General → API key governance controls new keys created by that account: creation can be disabled and expiry constrained to 1–30 days. Existing keys are unaffected and remain individually revocable. Billing preferences save company name, billing contact, and purchase-order reference for future setup only. No payment processor, invoices, credit grants, card collection, tax-ID collection, automatic charging, or provider billing synchronization is configured.
 
 Projects administration offers role/name filters, CSV export, and project creation. Advanced identity federation, IP gateway enforcement, mutual TLS, public embed keys, private tunnels, and organization-admin keys still require appropriate infrastructure; displayed availability is explicit.
+
+### Screenshot app collections
+The catalog includes 91 distinct apps named in the supplied plugin screenshots, reusing 18 existing entries and adding 73 listings marked **Setup required**. Collections preserve the screenshot groupings. These listings do not install plugins, connect provider accounts, or grant data access. Existing shared-link and import/export workflows keep their documented behavior. Unknown provider URLs are not guessed.

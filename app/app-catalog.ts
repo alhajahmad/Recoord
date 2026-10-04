@@ -201,4 +201,255 @@ export const apps=[
 {"id": "zotero", "name": "Zotero", "category": "Documents", "mode": "Shared link", "description": "Save a research library, group, or item link.", "hosts": ["zotero.org"]},
 {"id": "mendeley", "name": "Mendeley", "category": "Documents", "mode": "Shared link", "description": "Keep a reference library or research resource in reach.", "hosts": ["mendeley.com"]},
 {"id": "custom", "name": "Other app or website", "category": "Other", "mode": "Shared link", "description": "Save an HTTPS resource from another app or website.", "hosts": []},
+{"id": "requested-gmail", "name": "Gmail", "category": "Popular", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-remote-desktop-commander", "name": "Remote Desktop Commander", "category": "Popular", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-health", "name": "Health", "category": "Popular", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-outlook-email", "name": "Outlook Email", "category": "Popular", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-adobe", "name": "Adobe", "category": "New & noteworthy", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-instacart", "name": "Instacart", "category": "New & noteworthy", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-shopify", "name": "Shopify", "category": "New & noteworthy", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-flaim-fantasy", "name": "Flaim Fantasy", "category": "Productivity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-firecrawl", "name": "Firecrawl", "category": "Productivity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-google-calendar", "name": "Google Calendar", "category": "Productivity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-klaviyo", "name": "Klaviyo", "category": "Productivity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-metricool", "name": "Metricool", "category": "Productivity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-superhuman-mail", "name": "Superhuman Mail", "category": "Communication", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-hostinger-mail", "name": "Hostinger Mail", "category": "Communication", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-everygen", "name": "Everygen", "category": "Creativity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-higgsfield", "name": "Higgsfield", "category": "Creativity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-runway", "name": "Runway", "category": "Creativity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-invideo", "name": "invideo", "category": "Creativity", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-wpvibe", "name": "WPVibe", "category": "Developer tools", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-exa", "name": "Exa", "category": "Developer tools", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-parallel-search", "name": "Parallel Search", "category": "Developer tools", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-coros", "name": "COROS", "category": "Healthcare", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-fitness-ai-connector", "name": "Fitness AI Connector", "category": "Healthcare", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-tredict", "name": "Tredict", "category": "Healthcare", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-freddy", "name": "freddy", "category": "Healthcare", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-interactive-brokers-ibkr", "name": "Interactive Brokers (IBKR)", "category": "Finance", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-intuit-quickbooks", "name": "Intuit QuickBooks", "category": "Finance", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-era-context", "name": "Era Context", "category": "Finance", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-qbo-connector-by-meridian", "name": "QBO Connector by Meridian", "category": "Finance", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-massive", "name": "Massive", "category": "Finance", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-alpha-vantage", "name": "Alpha Vantage", "category": "Finance", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-skyscanner", "name": "Skyscanner", "category": "Travel", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-flightpoints", "name": "FlightPoints", "category": "Travel", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-trivago", "name": "trivago", "category": "Travel", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-flight-network", "name": "Flight Network", "category": "Travel", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-trip-com", "name": "Trip.com", "category": "Travel", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-anywheremap-navigate-locate", "name": "AnyWhereMap - Navigate+Locate", "category": "Travel", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-destiny-ai-astrology", "name": "Destiny AI Astrology", "category": "Entertainment", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-chessy", "name": "Chessy", "category": "Entertainment", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-pc-toplama-arac", "name": "PC Toplama Aracı", "category": "Entertainment", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-smart-chess-train-learn-to-win", "name": "Smart Chess:Train+Learn to win", "category": "Entertainment", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-fantasybot-sports", "name": "FantasyBot Sports", "category": "Entertainment", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-consensus", "name": "Consensus", "category": "Education", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-acumen-by-talarion", "name": "Acumen by Talarion", "category": "Education", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-explain-video-generator", "name": "Explain Video Generator", "category": "Education", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-scite", "name": "Scite", "category": "Education", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-scispace", "name": "SciSpace", "category": "Education", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-quizlet", "name": "Quizlet", "category": "Education", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-windsor-ai", "name": "Windsor.ai", "category": "Business & operations", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-vidiq", "name": "vidIQ", "category": "Business & operations", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-adspirer", "name": "Adspirer", "category": "Business & operations", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-ahrefs", "name": "Ahrefs", "category": "Business & operations", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-data", "name": "Data", "category": "Data & analytics", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-helium-10", "name": "Helium 10", "category": "Data & analytics", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-blockscout-blockchain-data", "name": "Blockscout Blockchain Data", "category": "Data & analytics", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-undermind", "name": "Undermind", "category": "Scientific research", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-tamarind-bio", "name": "Tamarind Bio", "category": "Scientific research", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-inductive", "name": "Inductive", "category": "Scientific research", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-proto", "name": "Proto", "category": "Scientific research", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-boltz", "name": "Boltz", "category": "Scientific research", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-ngs-analysis-workbench", "name": "NGS Analysis Workbench", "category": "Scientific research", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-codex-security", "name": "Codex Security", "category": "Security", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-malwarebytes", "name": "Malwarebytes", "category": "Security", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-privacyhawk", "name": "PrivacyHawk", "category": "Security", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-ajaxx-data-scrubber", "name": "AJAXX Data Scrubber", "category": "Security", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-soluvery", "name": "Soluvery", "category": "Security", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-ansvar-gateway", "name": "Ansvar Gateway", "category": "Security", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-tarot", "name": "Tarot", "category": "Other", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-ask-tarot-cards", "name": "Ask Tarot Cards", "category": "Other", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-steer-astro", "name": "Steer Astro", "category": "Other", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-the-astro-scope-destiny-matrix", "name": "The Astro Scope Destiny Matrix", "category": "Other", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-kleinanzeigen", "name": "Kleinanzeigen", "category": "Other", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+{"id": "requested-astrologic", "name": "Astrologic", "category": "Other", "mode": "Setup required", "description": "Requested app. Provider connection is not available in Recoord yet."},
+] as const;
+
+// Collections transcribed from the supplied screenshots; existing tools retain their real actions.
+export const requestedCollections=[
+  {
+    "name": "Popular",
+    "ids": [
+      "requested-gmail",
+      "drive",
+      "github",
+      "requested-remote-desktop-commander",
+      "requested-health",
+      "requested-outlook-email"
+    ]
+  },
+  {
+    "name": "New & noteworthy",
+    "ids": [
+      "requested-adobe",
+      "canva",
+      "figma",
+      "tldraw",
+      "requested-instacart",
+      "requested-shopify"
+    ]
+  },
+  {
+    "name": "Productivity",
+    "ids": [
+      "requested-flaim-fantasy",
+      "requested-firecrawl",
+      "notion",
+      "requested-google-calendar",
+      "requested-klaviyo",
+      "requested-metricool"
+    ]
+  },
+  {
+    "name": "Communication",
+    "ids": [
+      "slack",
+      "requested-superhuman-mail",
+      "teams",
+      "requested-hostinger-mail",
+      "brevo",
+      "zoom"
+    ]
+  },
+  {
+    "name": "Creativity",
+    "ids": [
+      "canva",
+      "requested-everygen",
+      "requested-higgsfield",
+      "requested-runway",
+      "figma",
+      "requested-invideo"
+    ]
+  },
+  {
+    "name": "Developer tools",
+    "ids": [
+      "requested-wpvibe",
+      "supabase",
+      "requested-exa",
+      "render",
+      "vercel",
+      "requested-parallel-search"
+    ]
+  },
+  {
+    "name": "Healthcare",
+    "ids": [
+      "requested-coros",
+      "requested-fitness-ai-connector",
+      "requested-tredict",
+      "requested-freddy"
+    ]
+  },
+  {
+    "name": "Finance",
+    "ids": [
+      "requested-interactive-brokers-ibkr",
+      "requested-intuit-quickbooks",
+      "requested-era-context",
+      "requested-qbo-connector-by-meridian",
+      "requested-massive",
+      "requested-alpha-vantage"
+    ]
+  },
+  {
+    "name": "Travel",
+    "ids": [
+      "requested-skyscanner",
+      "requested-flightpoints",
+      "requested-trivago",
+      "requested-flight-network",
+      "requested-trip-com",
+      "requested-anywheremap-navigate-locate"
+    ]
+  },
+  {
+    "name": "Entertainment",
+    "ids": [
+      "requested-destiny-ai-astrology",
+      "requested-chessy",
+      "requested-pc-toplama-arac",
+      "requested-smart-chess-train-learn-to-win",
+      "requested-fantasybot-sports",
+      "spotify"
+    ]
+  },
+  {
+    "name": "Education",
+    "ids": [
+      "requested-consensus",
+      "requested-acumen-by-talarion",
+      "requested-explain-video-generator",
+      "requested-scite",
+      "requested-scispace",
+      "requested-quizlet"
+    ]
+  },
+  {
+    "name": "Business & operations",
+    "ids": [
+      "requested-windsor-ai",
+      "requested-shopify",
+      "hubspot",
+      "requested-vidiq",
+      "requested-adspirer",
+      "requested-ahrefs"
+    ]
+  },
+  {
+    "name": "Data & analytics",
+    "ids": [
+      "posthog",
+      "requested-data",
+      "typeform",
+      "requested-helium-10",
+      "amplitude",
+      "requested-blockscout-blockchain-data"
+    ]
+  },
+  {
+    "name": "Scientific research",
+    "ids": [
+      "requested-undermind",
+      "requested-tamarind-bio",
+      "requested-inductive",
+      "requested-proto",
+      "requested-boltz",
+      "requested-ngs-analysis-workbench"
+    ]
+  },
+  {
+    "name": "Security",
+    "ids": [
+      "requested-codex-security",
+      "requested-malwarebytes",
+      "requested-privacyhawk",
+      "requested-ajaxx-data-scrubber",
+      "requested-soluvery",
+      "requested-ansvar-gateway"
+    ]
+  },
+  {
+    "name": "Other",
+    "ids": [
+      "requested-tarot",
+      "requested-ask-tarot-cards",
+      "requested-steer-astro",
+      "requested-the-astro-scope-destiny-matrix",
+      "requested-kleinanzeigen",
+      "requested-astrologic"
+    ]
+  }
 ] as const;
