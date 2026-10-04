@@ -44,6 +44,9 @@ test('shared projects enforce invitations, roles, private chats, conflicts, revo
  assert.equal((await req('viewer','workspace','PATCH',{kind:'document',id:'doc',version:1,title:'bad',content:'bad'})).status,403);
  assert.equal((await req('owner','workspace','PATCH',{kind:'document',id:'doc',version:1,title:'Homepage',content:'Reviewed text'})).status,200);
  assert.equal((await req('editor','workspace','PATCH',{kind:'document',id:'doc',version:1,title:'Homepage',content:'stale'})).status,409);
+ const summaryCard=(await req('viewer','workspace')).data.projects[0];
+ assert.equal(summaryCard.taskCount,1);assert.equal(summaryCard.completedCount,1);assert.equal(summaryCard.documentCount,1);assert.equal(summaryCard.memberCount,3);assert(summaryCard.lastActivity>=summaryCard.updated);
+ assert.equal((await req('stranger','workspace')).data.projects.length,0);
  assert.equal((await req('editor','team','POST',{action:'comment',project:'p',document:'doc',content:'Please review',mentions:['owner']})).status,200);
  assert.equal((await req('editor','team','POST',{action:'comment',project:'p',content:'bad mention',mentions:['stranger']})).status,404);
  assert.equal((await req('owner','team','POST',{action:'decision',project:'p',content:'Launch on Friday'})).status,200);
@@ -58,6 +61,7 @@ test('shared projects enforce invitations, roles, private chats, conflicts, revo
  assert.equal((await req('stranger','workspace','GET',null,'?project=p')).status,404);
  await req('owner','team','POST',{action:'remove',project:'p',user:'editor'});
  assert.equal((await req('editor','team','GET',null,'?project=p')).status,404);
+ assert.equal((await req('editor','workspace')).data.projects.length,0);
  assert.equal((await req('editor','workspace','PATCH',{kind:'document',id:'doc',version:2,title:'bad',content:'bad'})).status,404);
  assert.equal((await req('owner','data','DELETE',{confirm:'DELETE MY DATA'})).status,200);
  for(const table of ['projects','tasks','members','documents','comments','decisions','activities','conversations','messages'])assert.equal(sql.prepare('SELECT COUNT(*) AS count FROM '+table).get().count,0,table+' cascaded');
