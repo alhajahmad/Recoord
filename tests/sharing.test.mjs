@@ -34,6 +34,13 @@ test('public work and comments enforce audience, owner authority, blocks, privat
   assert.equal((await req(null)).data.posts.length,1);assert.equal((await req('bob')).data.posts.length,1);assert.equal((await req('alice')).data.posts.length,2);
   sql.prepare('INSERT INTO connections (id,sender,recipient,status,created,updated) VALUES (?,?,?,?,?,?)').run('ab','alice','bob','accepted',1,1);
   assert.equal((await req('bob')).data.posts.length,2);assert.equal((await req('carol')).data.posts.length,1);
+  assert.equal((await req('bob','posts','GET',null,'?scope=connections')).data.posts.length,2);
+  assert.equal((await req('carol','posts','GET',null,'?scope=connections')).data.posts.length,0);
+  assert.equal((await req('alice','posts','GET',null,'?scope=public')).data.posts.length,1);
+  assert.equal((await req('bob','posts','GET',null,'?scope=mine')).data.posts.length,0);
+  assert.equal((await req('alice','posts','GET',null,'?scope=mine')).data.posts.length,2);
+  assert.equal((await req(null,'posts','GET',null,'?scope=mine')).status,401);
+
   assert.equal((await req(null,'posts','GET',null,'?id='+limited.id)).status,404);
   assert.equal((await comment('carol',{targetType:'post',target:limited.id,content:'Outside'})).status,404);
   const base={targetType:'post',target:id},publicReply=await comment('bob',{...base,content:'Great work',audience:'public'});assert.equal(publicReply.status,200);
