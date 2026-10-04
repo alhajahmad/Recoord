@@ -1,5 +1,5 @@
 import {db} from '../api/shared';
-export const metricSources=['chat','summary','project_api','file_search'] as const;
+export const metricSources=['chat','summary','project_api','file_search','speech','transcription','vision','moderation'] as const;
 export type MetricSource=typeof metricSources[number];
 export type RequestMetric={owner:string;project?:string|null;keyId?:string|null;source:MetricSource;status:number;duration:number};
 // Metadata only; failure to record telemetry must never interrupt the underlying request.

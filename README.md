@@ -88,7 +88,7 @@ Administration shows personal usage, accessible project membership, project acti
 
 ### Project data and security policies
 
-Administration → Data controls lets project owners save per-project policies with revision conflict checks. Project AI controls apply to project chat and summaries; GitHub import controls apply to README imports; document search uses literal keywords in shared documents; developer API controls apply to `/api/v1/project`. These policies do not disable ordinary document editing or standalone private AI chats.
+Administration → Data controls lets project owners save per-project policies with revision conflict checks. Project AI controls apply to project chat, summaries, and AI tools opened within a project; GitHub import controls apply to README imports; document search uses literal keywords in shared documents; developer API controls apply to `/api/v1/project`. These policies do not disable ordinary document editing or standalone private AI chats.
 
 Owners can restrict project API-read counts to themselves, hide project activity/metadata logs or limit them to owners, and restrict new invitations and pending invitation acceptance to exact email domains. Existing members are unchanged. Metadata logging is optional: policy-change logging records changed field names; API logging records successful project reads and key IDs, never credentials, prompts, or document bodies. `X-Recoord-Log: 1` requests logging in per-call mode. These logs are not a complete or immutable compliance audit trail.
 
@@ -100,7 +100,7 @@ The private runtime setting `RECOORD_NOTIFICATION_EMAIL` stores the operator's d
 
 Administration → People & permissions includes per-project member search and CSV export, in-app invitations, fixed owner/editor/viewer access, and organizational groups. Only owners manage members and groups. Groups do not grant access. Non-owner members can leave; the sole owner cannot leave or demote themselves. Removing or leaving clears project task assignments and group membership. Invitations do not send email.
 
-Administration → Limits saves a personal monthly AI request-attempt cap (default 1,000) and an in-app threshold alert. Chat and project summaries enforce the cap on the server, alongside existing daily caps. Counts begin when this feature is deployed, use UTC calendar months, include reserved attempts that fail later, and are not token usage or billing totals. Changing a cap does not reset usage. Provider TPM/RPM/batch limits, spend, paid tiers, automatic payments, and emailed alerts are unavailable until connected to verified provider and billing services.
+Administration → Limits saves a personal monthly AI request-attempt cap (default 1,000) and an in-app threshold alert. Chat, project summaries, and AI tools enforce the cap on the server, alongside existing daily caps. Counts begin when this feature is deployed, use UTC calendar months, include reserved attempts that fail later, and are not token usage or billing totals. Changing a cap does not reset usage. Provider TPM/RPM/batch limits, spend, paid tiers, automatic payments, and emailed alerts are unavailable until connected to verified provider and billing services.
 
 ### Operational administration
 
@@ -112,3 +112,8 @@ Projects administration offers role/name filters, CSV export, and project creati
 
 ### Screenshot app collections
 The catalog includes 91 distinct apps named in the supplied plugin screenshots, reusing 18 existing entries and adding 73 listings marked **Setup required**. Collections preserve the screenshot groupings. These listings do not install plugins, connect provider accounts, or grant data access. Existing shared-link and import/export workflows keep their documented behavior. Unknown provider URLs are not guessed.
+
+### Groq model choice and AI tools
+The chat composer offers GPT OSS 120B, GPT OSS 20B, and Qwen 3.8 27B when the configured endpoint is Groq. The server accepts only this allowlist; other providers retain their configured default model. The header’s AI tools panel supports Orpheus English and Saudi Arabic speech (200 characters, WAV), Whisper Large v3/v3 Turbo transcription (5 MB uploads), Qwen image analysis (PNG/JPEG/WebP, 2 MB), and Safety GPT OSS 20B text review (10,000 characters). Preview models are marked. Account access and any Groq model terms must be satisfied by the site owner.
+
+All tools require sign-in, same-origin submission, bounded upload bodies, and the existing monthly and daily user/site request caps. Project-scoped submissions also enforce membership and the project AI policy. Tool inputs and results are not saved in Recoord; only metadata is recorded in Usage. Downloads stay local; moving a result to chat creates a draft, not a sent message. Safety review is advisory and does not enforce posting rules. There is no automatic Google account connection or external tool execution. Provider capability does not grant access to Gmail, Calendar, or Drive. Model documentation: https://console.groq.com/docs/models
