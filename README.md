@@ -9,7 +9,9 @@ Turn ideas into work you can return to. Recoord is an MIT-licensed AI workspace 
 - Streaming chat with an OpenAI-compatible HTTPS model provider.
 - Save replies as independent editable documents, with conflict detection and Markdown export.
 - Saved composer drafts, project/workspace JSON exports, and deletion controls.
-- Responsive interface, a clearly labeled sample, and optional WebMCP prompt staging.
+- Refined responsive workspace, keyboard project/chat search (Command/Ctrl + K), accessible mobile navigation, and optional WebMCP prompt staging.
+- Integrations: one-time public GitHub README import into project documents and calendar (.ics) export of open task deadlines. No external account connection or live sync is implied. Imports require editor/owner access; exports respect project read access.
+- Shared task boards, member invitations, discussions, decisions, and reviewed AI progress summaries.
 - Server-side credentials, ownership checks, same-origin write checks, user/site daily limits, bounded history and output.
 
 No model provider is connected by default. Documents and projects work without one; AI answers need provider configuration. The source archive is available from the app. Public repository: https://github.com/alhajahmad/Recoord.

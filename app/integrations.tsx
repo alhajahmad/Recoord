@@ -1,0 +1,22 @@
+'use client';
+import {useEffect,useState} from 'react';
+import {Code2,CalendarDays,ArrowDownToLine,ArrowUpRight} from 'lucide-react';
+import {Dialog,DialogContent,DialogTitle,DialogDescription} from '@/components/ui/dialog';
+type Props={open:boolean;onOpenChange:(open:boolean)=>void;projects:Array<{id:string;title:string;role:'owner'|'editor'|'viewer'}>;projectId:string|null;onImported:(projectId:string)=>void};
+export default function Integrations({open,onOpenChange,projects,projectId,onImported}:Props){
+ const [selected,setSelected]=useState(''),[repository,setRepository]=useState(''),[busy,setBusy]=useState(''),[error,setError]=useState(''),[notice,setNotice]=useState('');
+ useEffect(()=>{if(open){setSelected(projectId||projects[0]?.id||'');setError('');setNotice('');}},[open,projectId]);
+ const project=projects.find(p=>p.id===selected),canImport=!!project&&project.role!=='viewer';
+ async function run(kind:'github'|'calendar'){
+ setBusy(kind);setError('');setNotice('');
+ try{const response=await fetch('/api/integrations'+(kind==='calendar'?'?project='+encodeURIComponent(selected):''),{method:kind==='github'?'POST':'GET',headers:kind==='github'?{'Content-Type':'application/json'}:undefined,body:kind==='github'?JSON.stringify({project:selected,repository}):undefined});
+ if(!response.ok){const result=await response.json() as {error?:string};throw new Error(result.error||'Please try again.');}
+ if(kind==='github'){await response.json();setNotice('README imported into shared project documents.');onImported(selected);}
+ else{const url=URL.createObjectURL(await response.blob()),link=document.createElement('a');link.href=url;link.download='recoord-deadlines.ics';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);setNotice('Calendar file downloaded. Open it in Apple Calendar, or import it into Google Calendar or Outlook.');}
+ }catch(e){setError((e as Error).message);}finally{setBusy('');}}
+ return <Dialog open={open} onOpenChange={value=>{if(!busy)onOpenChange(value);}}><DialogContent className="recoord-dialog integrations-dialog"><DialogTitle>Bring your tools together.</DialogTitle><DialogDescription>Move useful context into Recoord and take your deadlines with you.</DialogDescription>
+ <label className="integration-project">Project<select value={selected} disabled={!!busy||!projects.length} onChange={e=>{setSelected(e.target.value);setError('');setNotice('');}}>{!projects.length&&<option value="">Create a project first</option>}{projects.map(p=><option key={p.id} value={p.id}>{p.title}</option>)}</select></label>
+ <div className="integration-grid"><section className="integration-card"><span className="integration-icon"><Code2 size={24}/></span><h3>GitHub</h3><span className="integration-note">One-time import · Public repositories</span><p>Turn a repository’s README into a shared project document your team can work with.</p><form onSubmit={e=>{e.preventDefault();void run('github');}}><label>Repository<input value={repository} onChange={e=>setRepository(e.target.value)} placeholder="owner/repository" maxLength={250} required disabled={!!busy||!canImport}/></label><button className="primary" disabled={!!busy||!canImport||!repository.trim()}>{busy==='github'?'Importing…':'Import README'}<ArrowUpRight size={16}/></button></form>{project?.role==='viewer'&&<p className="integration-note">Ask a project owner or editor to import documents.</p>}</section>
+ <section className="integration-card"><span className="integration-icon"><CalendarDays size={24}/></span><h3>Calendar</h3><span className="integration-note">One-time export · .ics file</span><p>Download open task deadlines as all-day events for Apple Calendar, Google Calendar, or Outlook.</p><button className="small-button" disabled={!!busy||!project} onClick={()=>void run('calendar')}>{busy==='calendar'?'Preparing…':'Download deadlines'}<ArrowDownToLine size={16}/></button><p className="integration-note">Includes open tasks with valid due dates. Completed tasks are excluded. Nothing is sent to a calendar service automatically.</p></section></div>
+ <p className="integration-note">These are copies, not a live sync. Changes made later won’t update the imported document or downloaded calendar.</p>{error&&<p className="integration-feedback form-error" role="alert">{error}</p>}{notice&&<p className="integration-feedback notice-banner" role="status">{notice}</p>}</DialogContent></Dialog>;
+}
