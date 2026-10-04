@@ -1,3 +1,4 @@
+import {requireProjectFeature} from '../../lib/project-policy';
 import {identity,db,failure,body,text,accessProject,activity,HttpError} from '../shared';
 import {boundedText,repositoryPath,projectCalendar,type CalendarTask} from '../../lib/integrations';
 export async function GET(request:Request){try{
@@ -8,7 +9,7 @@ export async function GET(request:Request){try{
  return new Response(calendar.content,{headers:{'Content-Type':'text/calendar; charset=utf-8','Content-Disposition':'attachment; filename="recoord-deadlines.ics"','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'}});
 }catch(error){return failure(error)}}
 export async function POST(request:Request){try{
- const user=await identity(request),data=await body(request),project=text(data.project,100,true);await accessProject(project,user,'write');
+ const user=await identity(request),data=await body(request),project=text(data.project,100,true);await accessProject(project,user,'write');await requireProjectFeature(project,'importsEnabled');
  let repository:string;try{repository=repositoryPath(text(data.repository,250,true));}catch(error){throw new HttpError(400,(error as Error).message);}
  let content:string;
  try{
@@ -20,7 +21,7 @@ export async function POST(request:Request){try{
  content=await boundedText(response,80000);
  }catch(error){if(error instanceof HttpError)throw error;throw new HttpError(502,error instanceof Error&&error.message.includes('too large')?error.message:'The README could not be downloaded. Please try again.');}
  if(!content.trim())throw new HttpError(400,'This repository has an empty README.');
- await accessProject(project,user,'write');
+ await accessProject(project,user,'write');await requireProjectFeature(project,'importsEnabled');
  const id=crypto.randomUUID(),title=(repository+' · README').slice(0,100),source='https://github.com/'+repository;
  await db().batch([db().prepare('INSERT INTO documents (id,owner,project,title,content,version,updated) VALUES (?,?,?,?,?,1,?)').bind(id,user,project,title,'Imported from '+source+' on '+new Date().toISOString().slice(0,10)+'. This is a one-time copy.\n\n'+content,Date.now()),activity(project,user,'Imported GitHub README: '+repository)]);
  return Response.json({id,project,title},{headers:{'Cache-Control':'no-store'}});

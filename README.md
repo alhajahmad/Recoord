@@ -85,3 +85,13 @@ Owners can create a read-only project key from **Administration → API keys**. 
 Send `Authorization: Bearer <your-key>` to `GET /api/v1/project` on your Recoord host. The endpoint returns the scoped project's title, goal, up to 100 recent tasks, and 20 recent shared documents. The response includes `truncated` flags and limits; it is not a complete backup. It excludes private AI conversations, messages, member email addresses, and project context. Each key allows 60 reads per minute. Browser sign-in endpoints do not accept these keys.
 
 Administration shows personal usage, accessible project membership, project activity, and current configuration. It is not an organization-wide admin role. Billing, unrestricted admin keys, private tunnels, outbound webhook delivery, comprehensive audit logging, configurable API-body logging, and automatic retention policies are not implemented. Project activity and key last-use timestamps are narrower records, not a compliance audit trail.
+
+### Project data and security policies
+
+Administration → Data controls lets project owners save per-project policies with revision conflict checks. Project AI controls apply to project chat and summaries; GitHub import controls apply to README imports; document search uses literal keywords in shared documents; developer API controls apply to `/api/v1/project`. These policies do not disable ordinary document editing or standalone private AI chats.
+
+Owners can restrict project API-read counts to themselves, hide project activity/metadata logs or limit them to owners, and restrict new invitations and pending invitation acceptance to exact email domains. Existing members are unchanged. Metadata logging is optional: policy-change logging records changed field names; API logging records successful project reads and key IDs, never credentials, prompts, or document bodies. `X-Recoord-Log: 1` requests logging in per-call mode. These logs are not a complete or immutable compliance audit trail.
+
+Provider training-data sharing, provider-managed MCP/web/image/code tools, workload identity, IP filtering, and mutual TLS are unavailable in this deployment. The invitation domain policy is not a network egress allowlist. No free provider credits are promised.
+
+The private runtime setting `RECOORD_NOTIFICATION_EMAIL` stores the operator's destination for future operational notifications. No delivery service is configured, and this setting does not forward user content or send mail.

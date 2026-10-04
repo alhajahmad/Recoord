@@ -1,3 +1,4 @@
+import {assertInviteDomain} from '../../lib/project-policy';
 import {identity,db,failure,body,text,HttpError,accessProject,activity} from '../shared';
 const fields="p.id,p.name,d.username,d.visibility,d.bio,d.title,d.company,d.location,d.website,d.photo,d.skills,d.looking_for AS lookingFor";
 const pair=(a:string,b:string)=>JSON.stringify([a,b].sort());
@@ -43,7 +44,7 @@ export async function POST(r:Request){try{
   if(person.visibility!=='members')throw new HttpError(404,'Person not available.');
   const project=text(d.project,100,true),role=d.role??'viewer';if(role!=='viewer'&&role!=='editor')throw new HttpError(400,'Choose viewer or editor access.');await accessProject(project,u,'owner');
   if(await db().prepare('SELECT id FROM members WHERE project=? AND user=?').bind(project,target).first())throw new HttpError(409,'This person is already a member.');
-  await socialQuota(u);const id=crypto.randomUUID();await db().batch([db().prepare('DELETE FROM invitations WHERE project=? AND email=?').bind(project,person.email),db().prepare('INSERT INTO invitations (id,project,email,role,created) SELECT ?,?,?,?,? WHERE EXISTS (SELECT 1 FROM projects WHERE id=? AND owner=?) AND EXISTS (SELECT 1 FROM connections WHERE id=? AND status=\'accepted\') AND NOT EXISTS (SELECT 1 FROM blocks WHERE (owner=? AND target=?) OR (owner=? AND target=?))').bind(id,project,person.email,role,Date.now(),project,u,key,u,target,target,u),activity(project,u,'Created a profile invitation with '+role+' access.')]);return json({ok:true,id});
+  await assertInviteDomain(project,String(person.email));await socialQuota(u);const id=crypto.randomUUID();await db().batch([db().prepare('DELETE FROM invitations WHERE project=? AND email=?').bind(project,person.email),db().prepare('INSERT INTO invitations (id,project,email,role,created) SELECT ?,?,?,?,? WHERE EXISTS (SELECT 1 FROM projects WHERE id=? AND owner=?) AND EXISTS (SELECT 1 FROM connections WHERE id=? AND status=\'accepted\') AND NOT EXISTS (SELECT 1 FROM blocks WHERE (owner=? AND target=?) OR (owner=? AND target=?))').bind(id,project,person.email,role,Date.now(),project,u,key,u,target,target,u),activity(project,u,'Created a profile invitation with '+role+' access.')]);return json({ok:true,id});
  }else{
   if(!connection)throw new HttpError(404,'Connection not found.');
   if(action==='accept'||action==='decline'){if(connection.recipient!==u||connection.status!=='pending')throw new HttpError(403,'Only the recipient can respond to this request.');}

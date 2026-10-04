@@ -1,3 +1,4 @@
+import {getProjectPolicy} from '../../lib/project-policy';
 import {env} from 'cloudflare:workers';
 import {getChatGPTUser} from '../../chatgpt-auth';
 import {db,failure,HttpError} from '../shared';
@@ -16,13 +17,16 @@ export async function GET(_request:Request){try{
   database.prepare('SELECT (SELECT COUNT(*) FROM projects WHERE owner=?) AS ownedProjects,(SELECT COUNT(*) FROM conversations WHERE owner=?) AS conversations,(SELECT COUNT(*) FROM documents WHERE owner=?) AS documents,(SELECT COUNT(*) FROM posts WHERE author=?) AS posts,(SELECT COUNT(*) FROM direct_messages WHERE sender=?) AS sentMessages').bind(u,u,u,u,u).first(),
   database.prepare(`SELECT a.id,a.project AS projectId,p.title AS projectTitle,COALESCE(pr.name,'Former member') AS actorName,a.content,a.created FROM activities a JOIN projects p ON p.id=a.project LEFT JOIN profiles pr ON pr.id=a.actor WHERE a.project IN (${accessible}) ORDER BY a.created DESC,a.id DESC LIMIT 50`).bind(u,u).all(),
  ]);
+ const policies=new Map(await Promise.all(projects.results.map(async p=>[String(p.id),await getProjectPolicy(String(p.id))] as const)));
+ const visibleActivity=activity.results.filter(a=>{const policy=policies.get(String(a.projectId)),p=projects.results.find(p=>p.id===a.projectId);return policy?.logsVisibility==='members'||policy?.logsVisibility==='owner'&&p?.role==='owner'});
  const requests=Number(quota?.count)||0,dailyLimit=Math.max(1,Math.min(Number(e.AI_DAILY_REQUEST_LIMIT)||50,1000));
  const configured=Boolean(e.AI_BASE_URL&&e.AI_MODEL&&e.AI_API_KEY);
  const checkedAt=now.toISOString();
  return Response.json({checkedAt,scope:'personal',profile:profile??{id:u,name:user.displayName,email:user.email,username:null,visibility:'private'},projects:projects.results,people:people.results,
   usage:{day,requests,dailyLimit,remaining:Math.max(0,dailyLimit-requests),resetsAt:new Date(Date.parse(day+'T00:00:00Z')+86400000).toISOString(),maxOutputTokens:Math.max(256,Math.min(Number(e.AI_MAX_OUTPUT_TOKENS)||2048,4096)),note:'Reserved AI requests today, including attempts that may fail. Limits reset at midnight UTC. A shared site limit may also apply.'},counts,
-  provider:{configured,label:e.AI_PROVIDER_LABEL||'AI provider',model:e.AI_MODEL||null},health:{database:'available',provider:configured?'configured':'not-configured',providerChecked:false},activity:activity.results,
+  provider:{configured,label:e.AI_PROVIDER_LABEL||'AI provider',model:e.AI_MODEL||null},health:{database:'available',provider:configured?'configured':'not-configured',providerChecked:false},activity:visibleActivity,
   retention:{automaticDeletion:false,exportAvailable:true,deleteAvailable:true,description:'Saved content stays until deleted. No scheduled retention policy is configured. Account data deletion also removes owned projects and direct conversation history for both participants; contributions to other people’s projects remain with attribution removed. Hosting and model-provider retention are managed separately.'},
-  capabilities:{apiKeys:true,adminKeys:false,billing:false,tunnels:false,webhooks:false,auditLogging:false,apiCallLogging:false}
+  notifications:{destinationConfigured:Boolean(e.RECOORD_NOTIFICATION_EMAIL),deliveryConfigured:false},
+  capabilities:{apiKeys:true,adminKeys:false,billing:false,tunnels:false,webhooks:false,auditLogging:false,apiCallLogging:true}
  },{headers:{'Cache-Control':'no-store'}});
  }catch(error){const response=failure(error);response.headers.set('Cache-Control','no-store');return response}}

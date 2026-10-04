@@ -50,6 +50,13 @@
       "when": 1791147490439,
       "tag": "0006_nostalgic_jack_power",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1791148435360,
+      "tag": "0007_abnormal_rogue",
+      "breakpoints": true
     }
   ]
 }
