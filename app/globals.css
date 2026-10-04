@@ -55,3 +55,5 @@ html[data-density=compact] .nav-item{padding-top:7px;padding-bottom:7px;min-heig
 .apps-hub .apps-header{flex-shrink:0}.apps-body{min-height:0;flex:1}
 
 .apps-catalog-summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-bottom:18px}.apps-catalog-summary strong{font-size:20px}.apps-catalog-summary span,.apps-filter-row>span{font-size:13px;color:var(--muted-foreground,#64748b)}.apps-filter-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:18px 0}.apps-filter-row label{display:flex;align-items:center;gap:10px;font-size:13px}.apps-filter-row select{padding:8px 12px;border:1px solid #dce2ec;border-radius:10px;background:transparent;color:inherit}.apps-filter-row .apps-back{margin:0}.apps-hub .network-tabs{flex-wrap:wrap}
+
+.apps-load-more{display:flex;margin:24px auto 12px}
