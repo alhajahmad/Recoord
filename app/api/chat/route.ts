@@ -1,3 +1,4 @@
+import {reserveMonthlyRequest} from '../../lib/usage-controls';
 import {requireProjectFeature} from '../../lib/project-policy';
 import {env} from "cloudflare:workers";
 import {identity,db,failure,body,text,accessProject,HttpError} from "../shared";
@@ -9,7 +10,7 @@ export async function POST(r:Request){try{
  if(project)await requireProjectFeature(String(project.id),'aiEnabled');
  const existing=await db().prepare("SELECT * FROM conversations WHERE id=?").bind(id).first();if(existing&&existing.owner!==owner)throw new HttpError(404,"Conversation not found.");if(existing&&(existing.project??null)!==(d.project??null))throw new HttpError(400,"Conversation belongs to another project.");
  const priorRequest=await db().prepare("SELECT id FROM messages WHERE id=?").bind(requestId).first();if(priorRequest)throw new HttpError(409,"This message was already submitted. Reopen the conversation to see its saved reply.");
- const daily=Math.max(1,Math.min(Number(e.AI_DAILY_REQUEST_LIMIT)||50,1000)),global=Math.max(1,Math.min(Number(e.AI_DAILY_SITE_REQUEST_LIMIT)||200,10000)),day=new Date().toISOString().slice(0,10);
+await reserveMonthlyRequest(owner); const daily=Math.max(1,Math.min(Number(e.AI_DAILY_REQUEST_LIMIT)||50,1000)),global=Math.max(1,Math.min(Number(e.AI_DAILY_SITE_REQUEST_LIMIT)||200,10000)),day=new Date().toISOString().slice(0,10);
  for(const [key,limit] of [[owner+":"+day,daily],["site:"+day,global]] as const){const reservation=await db().prepare("INSERT INTO quotas (key,count) VALUES (?,1) ON CONFLICT(key) DO UPDATE SET count=count+1 WHERE count<? RETURNING count").bind(key,limit).first();if(!reservation)throw new HttpError(429,"Today’s usage limit has been reached. Your draft is safe; try again tomorrow.");}
  const rows=existing?(await db().prepare("SELECT role,content FROM (SELECT role,content,created,rowid AS seq FROM messages WHERE conversation=? ORDER BY created DESC,rowid DESC LIMIT 30) ORDER BY created,seq").bind(id).all()).results as ModelMessage[]:[];
  const context=project?"\nProject goal: "+project.goal+"\nReference context (user supplied): "+project.context:"";

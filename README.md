@@ -95,3 +95,9 @@ Owners can restrict project API-read counts to themselves, hide project activity
 Provider training-data sharing, provider-managed MCP/web/image/code tools, workload identity, IP filtering, and mutual TLS are unavailable in this deployment. The invitation domain policy is not a network egress allowlist. No free provider credits are promised.
 
 The private runtime setting `RECOORD_NOTIFICATION_EMAIL` stores the operator's destination for future operational notifications. No delivery service is configured, and this setting does not forward user content or send mail.
+
+### People and request controls
+
+Administration → People & permissions includes per-project member search and CSV export, in-app invitations, fixed owner/editor/viewer access, and organizational groups. Only owners manage members and groups. Groups do not grant access. Non-owner members can leave; the sole owner cannot leave or demote themselves. Removing or leaving clears project task assignments and group membership. Invitations do not send email.
+
+Administration → Limits saves a personal monthly AI request-attempt cap (default 1,000) and an in-app threshold alert. Chat and project summaries enforce the cap on the server, alongside existing daily caps. Counts begin when this feature is deployed, use UTC calendar months, include reserved attempts that fail later, and are not token usage or billing totals. Changing a cap does not reset usage. Provider TPM/RPM/batch limits, spend, paid tiers, automatic payments, and emailed alerts are unavailable until connected to verified provider and billing services.

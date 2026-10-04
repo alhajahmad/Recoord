@@ -57,6 +57,13 @@
       "when": 1791148435360,
       "tag": "0007_abnormal_rogue",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1791149059637,
+      "tag": "0008_remarkable_malcolm_colcord",
+      "breakpoints": true
     }
   ]
 }
